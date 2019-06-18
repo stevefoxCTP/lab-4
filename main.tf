@@ -2,14 +2,14 @@ provider "aws" {
   region     = "us-east-1"
 }
 
-resource "aws_instance" "example" {
-  ami           = "ami-0565af6e282977273"
-  instance_type = "${var.instance_type}"
+module "webserver" {
+  source            = "ptfe.ctp-devops-training.com/ctp-terraform-training/webserver/aws"
+  version           = "1.0.1"
+  ami               = "ami-0565af6e282977273"
 
-  tags = {
-    Name = "Module 3 Lab 4"
-    User = "${var.lab_username}"
-  }
+  filecontent       = "${file("index.html")}"
+  env_version       = "Blue"
 
-  count         = "${var.cluster_count}"
+  lab_username      = "${var.lab_username}"
+  instance_type     = "t2.small"
 }
