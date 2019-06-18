@@ -3,7 +3,13 @@ provider "aws" {
 }
 
 module "webserver" {
-  source        = "ptfe.ctp-devops-training.com/ctp-terraform-training/webserver/aws"
-  ami           = "ami-0565af6e282977273"
-  content       = "${file("index.html")}"
+  source            = "ptfe.ctp-devops-training.com/ctp-terraform-training/webserver/aws"
+  version           = "1.0.1"
+  ami               = "ami-0565af6e282977273"
+
+  filecontent       = "${file("index.html")}"
+  env_version       = "Green"
+
+  lab_username      = "${var.lab_username}"
+  instance_type     = "t2.micro"
 }
